@@ -1,0 +1,30 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('histo_visite_data', function (Blueprint $table) {
+            $table->unsignedBigInteger('ImageID');
+            $table->unsignedBigInteger('HistoriqueID');
+            $table->foreign('ImageID')->references('ImageID')->on('visite_datas');
+            $table->foreign('HistoriqueID')->references('HistoriqueID')->on('historiques');
+            $table->primary(['ImageID', 'HistoriqueID']);
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        //
+    }
+};
