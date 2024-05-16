@@ -43,4 +43,30 @@ class SuperAdminController extends Controller
         $pointDeVente->save();
         return response()->json(['success' => 'Nouveau point de vente créé avec succès.'], 201);
     }
+    public function gestionSouscriptions(Request $request)
+    {
+        $user = Utilisateur::find(Session::get('loginID'));
+
+        if (!$user || $user->role !== 'super-admin') {
+            return response()->json(['error' => 'Action non autorisée.'], 403);
+        }
+        $typeSouscription = $request->input('type_souscription');
+        $utilisateurs = Utilisateur::where('type_souscription', $typeSouscription)->get();
+
+        return response()->json(['utilisateurs' => $utilisateurs]);
+    }
+    public function modifierTypeSouscription(Request $request, $UtilisateurID)
+    {
+        $user = Utilisateur::find(Session::get('loginID'));
+
+        if (!$user || $user->role !== 'super-admin') {
+            return response()->json(['error' => 'Action non autorisée.'], 403);
+        }
+        $utilisateur = Utilisateur::findOrFail($UtilisateurID);
+
+        $nouveauTypeSouscription = $request->input('nouveau_type_souscription');
+        $utilisateur->type_souscription = $nouveauTypeSouscription;
+        $utilisateur->save();
+        return response()->json(['message' => 'Type de souscription modifié avec succès.']);
+    }
 }

@@ -74,5 +74,4 @@ class BackOfficeController extends Controller
 
         return response()->json(['success' => 'Visite mise à jour avec succès.']);
     }
-
 }

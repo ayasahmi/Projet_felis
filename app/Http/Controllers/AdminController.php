@@ -192,22 +192,7 @@ class AdminController extends Controller
             ['id_critere' => $id_critere],$data
         );
 
-        return response()->json(['success' => true,'message' => 'Critères enregistrés avec succès','data' => $critere]);
-    }
-    public function modifierCriteres(Request $request, $id_critere)
-    {
-        $data = $request->validate([
-            'facing' => 'boolean',
-            'prix' => 'boolean',
-            'stock' => 'boolean',
-            'position_prod' => 'boolean',
-            'shelf_sharing' => 'boolean',
-            'conformite_plano' => 'boolean'
-        ]);
-        $critere = CritereClient::findOrFail($id_critere);
-        $critere->update($data);
-
-        return response()->json(['success' => true,'message' => 'Critères modifiés avec succès','data' => $critere]);
+        return response()->json(['success' => true,'message' => 'Critères enregistrés avec succès','data' => [$data,$critere]]);
     }
     public function listerPlanogrammes()
     {
