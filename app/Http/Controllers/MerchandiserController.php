@@ -19,7 +19,7 @@ class MerchandiserController extends Controller
     public function consulterPlanning()
     {
         $userId = Session::get('loginID');
-        $userLocation = Pointage::where('UtilisateurID', $userId)->latest()->first();
+        $userLocation = Pointage::where('UtilisateurID', $userId)->first();
         if (!$userLocation) {
             return response()->json(['error' => 'Localisation non trouvée.'], 404);
         }
