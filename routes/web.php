@@ -6,6 +6,7 @@ Route::get('/', function () {
     return 'bonj';
 });
 use App\Http\Controllers\AdminController ;
+Route::get('/api/admin/utilisateurs/user', [AdminController::class, 'getUser']);
 Route::get('/api/admin/utilisateurs', [AdminController::class, 'listeUtilisateurs']);
 Route::post('/api/admin/utilisateurs', [AdminController::class, 'creerUsers']);
 Route::get('/api/admin/utilisateurs/{id}/edit', [AdminController::class, 'editerUser']);

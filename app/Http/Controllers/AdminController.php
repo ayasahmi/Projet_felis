@@ -62,11 +62,7 @@ class AdminController extends Controller
         ]);
         $utilisateur->save();
         $admin->decrement('Nbr_users');
-        return redirect()->route('admin.dashboard')->with('success', 'Nouvel utilisateur créé avec succès.');
-    }
-    public function editerUser($id) {
-        $user = Utilisateur::findOrFail($id);
-        return view('admin.utilisateurs.editeruser', compact('user'));
+        return response()->json(['success' => 'utilisateurs aouté']);
     }
     public function updateUser(Request $request, $id) {
         $request->validate([
@@ -87,12 +83,16 @@ class AdminController extends Controller
         $user->role = $request->role;
         $user->save();
 
-        return redirect()->route('admin.dashboard')->with('success', 'Utilisateur mis à jour avec succès.');
+        return response()->json(['success' => 'utilisateurs modifié']);
     }
     public function deleteUser($id) {
         $user = Utilisateur::findOrFail($id);
         $user->delete();
-        return redirect()->route('admin.dashboard')->with('success', 'Utilisateur supprimé avec succès.');
+        return response()->json(['success' => 'utilisateurs suppromé']);
+    }
+
+    public function getUser(Request $request) {
+        return $request->all()['id'];
     }
     public function listeProduits(Request $request)
     {
@@ -175,7 +175,8 @@ class AdminController extends Controller
     public function choixCriteres()
     {
         $criteresAChoisir = ['facing', 'stock', 'prix', 'position_prod', 'shelf_sharing', 'conformite_plano'];
-        return response()->json(['success' => true,'criteria' => $criteresAChoisir]);
+        $classifications = ['categorie', 'famille', 'sous_famille','sous_sous_famille'];
+        return response()->json(['success' => true,'criteria' => $criteresAChoisir,'classifications' => $classifications]);
     }
     public function enregistrerCriteres(Request $request, $id_critere)
     {
